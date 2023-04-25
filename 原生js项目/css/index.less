@@ -1,0 +1,600 @@
+// 用于清除浮动所导致的父类高度塌陷
+.clearfix::after{
+    display: table;
+    content: "";
+    clear: both;
+}
+// 版心
+.main{
+    width: 1200px;
+    margin: 0 auto;
+}
+// 外层
+.wrapper{
+    #header{
+        // 上半部
+        .headerTop{
+            background-color: #eaeaea;
+            height: 30px;
+            .headerMain{
+                
+                line-height: 30px;
+                .left{
+                    h5{
+                        float:  left;
+                        margin-right: 5px;
+                    }
+                    p{
+                        float:  left;
+                        a{
+                            // &代表自身标签
+                            &:first-child{
+                                padding-right: 5px;
+                                border-right: 1px solid #b3aeae;
+                            }
+                        }
+                    }
+                }
+                .right{
+                    float: right;
+                    #ulList{
+                        float: left;
+                        li{
+                            float: left; 
+                            a{
+                                padding: 0px 10px;
+                                border-right: 1px solid #b3aeae;                        
+                            }
+                            &:last-child a{
+                                padding-right: 0;
+                                border-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // 下半部
+        .headerBottom{
+            .headerBottomMain{
+                .logo{
+                    float: left;
+                    margin: 25px 45px;
+                  
+                }
+                .search{
+                    float: right;
+                    margin-top: 35px;
+                    input{
+                       &:first-child{
+                        box-sizing: border-box;
+                        width: 490px;
+                        height: 32px;
+                        padding: 0px 4px;
+                        border: 3px solid #ea4a36;
+                        float: left;
+                       }
+                        &:last-child{
+                            width: 68px;
+                            height: 32px;
+                            background-color: #ea4a36;
+                            border: none;
+                            color: #fff;
+                        }
+                        &::-webkit-input-placeholder{
+                            color: yellowgreen;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .nav{
+        border-bottom: 2px solid red;
+        .navMain{
+            a{
+                font-size: 14px;
+                margin: 0 22px;
+                float: left;
+                font-size: 16px;
+                text-align: center;
+                line-height: 50px;
+                &:first-child{
+                    display: block;
+                    font-weight: bold;
+                    font-size: 14px;
+                    background-color: #e1251b;
+                    color: #fff;
+                    width: 210px;
+                    height: 50px;
+                    line-height: 50px;
+                }
+            }
+        } 
+    }
+
+    .content{
+        .contentMain{
+            margin: 15px auto 0 auto;    
+            .navPath{
+               font-size: 0;
+                padding: 9px 15px 9px 0px;
+                a{
+                    font-size: 12px;
+                }
+                i{
+                    padding: 0px 5px;
+                    font-size: 12px;
+                }
+            }
+            .center{
+                margin: 5px 0 15px;
+                .left{
+                    width: 400px;
+                    float: left;
+                    .leftTop{
+                        width: 400px;       
+                        position: relative;
+                        .smallPane{
+                            width: 400px;
+                            height: 400px;
+                            border: 1px solid #dfdfdf;
+                            position: relative;
+                            .mask{
+                                width: 200px;
+                                height: 200px;
+                                position: absolute;
+                                top:0;
+                                left: 0;
+                                background-color: rgba(255, 255, 255, .5);
+                                border: 1px solid #ddd;
+                            }
+                        }
+                        .bigPane{
+                            width: 400px;
+                            height: 400px;
+                            border: 1px solid #ddd;
+                            position: absolute;
+                            left: 420px;
+                            top: 0px;
+                            overflow: hidden;
+                            img{
+                                width: 800px;
+                                height: 800px;
+                                position: absolute;
+                            }
+                        }
+                    }
+                    .leftBottom{      
+                        margin-top: 5px;
+                        a{
+                            float: left;
+                            width: 10px;
+                            height: 54px;
+                            display: block;
+                            background-color: #ebebeb;
+                            border: 1px solid #ccc;
+                            line-height: 54px;
+                            text-align: center;
+                            &:first-child{
+                                margin-right: 4px;
+                            }
+                        }
+                        .imgList{
+                            width: 372px;
+                            height: 56px;
+                            overflow: hidden;
+                            float: left;
+                            position: relative;
+                            ul{
+                                white-space: nowrap;
+                                position: absolute;
+                                left: 0;
+                                transition: 0.4s;
+                                font-size: 0px;
+                                li{
+                                    width: 50px;
+                                    height: 50px;
+                                    padding: 2px;
+                                    margin-right: 20px;      
+                                    display: inline-block;
+                                    border: 1px solid #ccc;
+                                    img{
+                                        width: 50px;
+                                        height: 50px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .right{
+                    width: 700px;
+                    float: right;
+                    .rightTop{      
+                        h3{
+                            font-size: 14px;
+                            margin-top: 15px;
+                            line-height: 21px;
+                        }
+                        .description{
+                            color: #e12228;
+                            margin-top: 15px;
+                        }
+                        .rightMiddle{
+                            margin-top: 10px;
+                            padding: 7px;
+                            background-color: #fee9ec;
+                            .priceDes{
+                                line-height: 28px;
+                                >span{
+                                    margin-right: 15px;
+                                    float: left;
+                                }
+                                .price{
+                                    >span{
+                                        float: left;
+                                        font-size: 16px;
+                                        color: #cc1122;
+                                    }
+                                    i{
+                                        
+                                        float: left;
+                                        color: #cc1122;
+                                    }
+                                    p{
+                                        font-size: 24px;
+                                        font-weight: bold;
+                                        float: left;
+                                        color: #cc1122;
+                                    }
+                                }
+                                p{
+                                    float: right;
+                                }
+                            }
+                            .sales{
+                                line-height: 28px;
+                                >span{
+                                    margin-right: 15px;
+                                    float: left;
+                                }
+                                p{
+                                    width: 520px;
+                                    line-height: 28px;
+                                    float: left;
+                                    span{
+                                        &:first-child{
+                                            background-color: #c81623;
+                                            color: #fff;
+                                            padding: 3px;
+                                        }
+                                        color: #999;
+                                    }
+                                }
+                            }
+                        }
+                        .support{
+                            line-height: 28px;
+                            margin-top: 10px;
+                            span{
+                                margin-right: 15px;
+                                float: left;
+                            }
+                            p{
+                              color:#999;
+                            }
+                        }
+                        .address{
+                            line-height: 28px;
+                            margin-top: 10px;
+                            padding-bottom: 5px;
+                            border-bottom: 1px solid #ededed;
+                            span{
+                                margin-right: 15px;
+                                float: left;
+                            }
+                            p{
+                              color:#999;
+                            }
+                        }
+                    }
+                    .rightBottom{
+                        margin-top: 10px;
+                        line-height: 28px;
+                        .chooseWrap{
+                            dl{
+                                margin:13px 0px 13px 0px;
+                                // 清除浮动
+                                clear: both;
+                                content: "";
+                                display: table;
+                                dt{
+                                    margin-right: 15px;
+                                    float: left;
+                                }
+                                dd{
+                                    margin-right: 5px;
+                                    color: #666;
+                                    line-height: 24px;
+                                    padding: 2px 14px;
+                                    border: 1px solid transparent;
+                                    border-top-color: #eee;
+                                    border-left-color: #eee;
+                                    border-right-color: #bbb;
+                                    border-bottom-color: #bbb;
+                                    float: left;
+                                    cursor: pointer;
+                                }
+                                .active{
+                                    color: red;
+                                }
+                            }
+                            .choose{
+                                .mark{
+                                    height: 30px;
+                                    background-color: snow;
+                                    border: 1px solid #ddd;
+                                    padding: 0 10px;
+                                    margin-right: 20px;
+                                    text-align: center;
+                                    line-height: 30px;
+                                    float: left;
+                                    a{
+                                        cursor: pointer;
+                                        padding-left: 10px;
+                                        color: red;
+                                    }
+                                }
+                            }
+                        }
+                        .shopCart{
+                            .count{
+                                width: 55px;
+                                margin-right: 15px;
+                                position: relative;
+                                float: left;
+                                input{
+                                   width: 38px;
+                                   height: 37px;
+                                   border: 1px solid #ddd;
+                                   color: #555;
+                                }
+                                a{
+                                    width: 15px;
+                                    height: 18px;
+                                    background-color: #f1f1f1;
+                                    color: #666;
+                                    position: absolute;
+                                    text-align: center;
+                                    line-height: 18px;
+                                    border: 1px solid #ddd;
+                                    right: 1px;
+                                    &:first-child{
+                                        top: 0px;
+                                    }
+                                    &:last-child{
+                                        top: 19px;
+                                        border-top: 0;
+                                    }
+                                }
+                            }
+                            button{
+                                padding: 0 25px;
+                                height: 36px;
+                                font-size: 16px;
+                                line-height: 36px;
+                                border: 0;
+                                color:#fff;
+                                background-color: #e1251b;
+                                float: left;
+                            }
+                        }
+                    }
+                   
+                }
+            }
+        }
+    }
+ 
+    .bottom{
+        width: 1200px;
+        margin: 30px auto 0;
+        .bottomLeft{
+            width: 210px;
+        
+            border: 1px solid #ccc;
+            float: left;
+            .bottomLeftTop{
+                height: 40px;
+                h4{
+                    width: 105px;
+                    text-align: center;
+                    height: 40px;
+                    line-height: 37px;
+                    float: left;
+                    border-top: 3px solid #fff;
+                    border-bottom: 1px solid #ccc;
+                    &.active{
+                        width: 105px;
+                        line-height: 40px;
+                        height: 37px;
+                        border-bottom: 0;
+                        border-top: 3px solid #e1251b;
+                    }
+                }
+                
+            }
+            .bottomContent{      
+                >div{
+                    >ul{
+                        padding: 0 8px;
+                        >li{
+                            width: 50%;
+                            float: left;
+                            line-height: 28px;
+                            border-bottom: 1px dashed #ededed;
+                        }
+                    }
+                    .bottomImg{
+                
+                        ul{
+                            padding: 0 8px;
+                            margin:5px 0px 15px ;
+                            li{
+                                border-bottom: 1px solid#ededed;
+                                img{width: 152px;}
+                                p{
+                                    font-size: 16px;
+                                    color: #c81623;
+                                }
+                                .button{   
+                                    margin: 5px 0px;
+                                    text-align: center;
+                                    a{
+                                        border: 1px solid #8c8c8c;
+                                        color: #8c8c8c;
+                                        padding: 2px 14px;
+                                        line-height: 18px;         
+                                        background-color: #fff;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                 
+                } 
+                .hide{
+                    display: none;
+                }
+            }
+        }
+        .bottomRight{
+            width: 980px;
+            float: left;
+            margin-left: 8px;
+            .bottomRightTop{
+                border: 1px solid #ddd;
+                margin-bottom: 15px;
+                h4{
+                    border-bottom: 1px solid #ddd;
+                    background-color: #f1f1f1;
+                    color: #333;
+                    padding: 5px 0px 5px 15px;
+                }
+                .listWrap{
+                    height: 170px;
+                    padding-top: 10px;
+                    .left{
+                        width: 127px;
+                        height: 165px;
+                        text-align: center;
+                        position: relative;
+                        float: left;
+                        img{
+                            width: 87px;
+                            margin: 0 auto;
+                        }
+                        span{
+                            font-size: 16px;
+                            color: #c81623;
+                        }
+                        i{
+                            top: 48px;
+                            right: -25px;
+                            font-size: 16px;
+                            position: absolute;
+                        }
+                    }
+                    .middle{
+                        width: 668px;
+                        height: 165px;
+                        float: left;
+                        li{
+                            text-align: center;
+                            width: 127px;
+                            margin: 0 20px;
+                            float: left;
+                            img{
+                                width: 120px;
+                                height: 130px;
+                            } 
+                        }
+                    }
+                    .right{
+                        float: left;
+                        height: 165px;
+                        padding: 0 20px;
+                        border-left: 1px solid #ddd;
+                        >div{
+                            
+                            p{
+                                margin: 10px 0;
+                            }
+                            div{
+                                font-weight: bold;
+                                margin: 20px 0;
+                               span{
+                                    color: #c81623;
+                                    font-size: 16px;
+                                    font-weight: bold;
+                               }
+                            }
+                        }
+                        .btn{
+                            button{
+                                padding: 10px 25px;
+                                color: #fff;
+                                font-size: 16px;
+                                background-color: #e1251b;
+                                border: none;
+                            }
+                        }
+                    }
+                }
+            }
+            .bottomDtail{
+                .tabBtn{
+                    background-color: #ededed;
+                    ul{
+                        li{ 
+                            height: 40px;
+                            float: left;
+                            padding: 0 11px;
+                            height: 40px;
+                            line-height: 40px;
+                            display: block;
+                            border: 1px solid #ddd;
+                            border-left: none;
+                            background-color: #fff;
+                            &:first-child{
+                                border-left: 1px solid #ddd;
+                            }
+                            &.active{
+                                border-left: 1px solid #ddd;
+                                background-color: red;
+                                a{
+                                    color: #fff;
+                                }  
+                            }         
+                        }
+                    }
+                }
+                .tabContens{
+                   div{
+                        ul{
+                            padding-left: 20px;
+                            margin: 10px 0px;
+                            li{
+                                margin: 10px 0px;
+                            }
+                        }
+                   }
+                   .hide{
+                    display: none;
+                   }
+                }
+            }
+        }
+    }
+}
