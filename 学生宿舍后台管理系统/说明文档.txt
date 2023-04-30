@@ -1,0 +1,12 @@
+该系统使用Vue 前端框架 
+后端使用 ssm 框架 
+启动后端接口时 需要在右上角选择 ZCApplication 后启动 
+需要在本地数据库导入数据 开启连接数据库
+
+登录数据  
+	学生身份
+		username : liuStu
+		password : 111111
+	管理员身份 
+		username : admin
+		password : 111111
