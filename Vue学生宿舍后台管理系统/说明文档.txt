@@ -1,8 +1,9 @@
 该系统使用Vue 前端框架 
 后端使用 ssm 框架 
 启动后端接口时 需要在右上角选择 ZCApplication 后启动 
-需要在本地数据库导入数据 开启连接数据库
 
+一处错误需要在zc_springboot2\src\main\resources\application.yml的url中补充&allowPublicKeyRetrieval=true修改为 
+jdbc:mysql://localhost:3306/dormitory_manage?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 登录数据  
 	学生身份
 		username : liuStu
