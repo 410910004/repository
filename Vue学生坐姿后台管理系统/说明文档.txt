@@ -2,7 +2,8 @@
 设计技术有vue vue-router vuex axios element-ui组件
 
 后台使用ssm框架
-
+一处错误需要在zc_springboot2\src\main\resources\application.yml的url中补充&allowPublicKeyRetrieval=true修改为 
+jdbc:mysql://localhost:3306/dormitory_manage?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 登录信息
  	管理员 
 		username admin
@@ -13,3 +14,4 @@
 
 		username: liuTeacher
 		password: 111111
+		
