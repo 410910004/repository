@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>关于我</title>
+<link rel="icon"  th:href="@{/statics/images/img/favicon.ico}" type="image/x-icon" />
+<link th:href="@{/statics/css/base.css}" rel="stylesheet">
+<link th:href="@{/statics/css/index.css}" rel="stylesheet">
+<link th:href="@{/statics/css/main.css}" rel="stylesheet">
+<link th:href="@{/statics/css/userInfo.css}" rel="stylesheet">
+<link th:href="@{'/statics/css/'+${userModel.userTheme}}"
+	rel="stylesheet">
+<!-- 弹窗样式 -->
+<link rel="stylesheet"
+	th:href="@{/statics/js/artDialog/skins/opera.css}" type="text/css" />
+<style type="text/css">
+.con_content {
+	overflow: hidden;
+	width: 655px;
+	margin: auto;
+}
+
+table.dtab {
+	line-height: 44px;
+	padding-left: 20px;
+	width: 650px;
+}
+
+.bianji {
+	display: none;
+}
+
+.info_about {
+	width: 88%;
+}
+
+.about_box {
+	padding: 20px;
+	overflow: hidden;
+}
+
+.nh1 {
+	width: 100%
+}
+
+.info_about p {
+	line-height: 25px;
+	padding-top: 10px;
+}
+</style>
+
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<div class="headtop"></div>
+			<div class="logtop">
+				<a th:href="@{${'/user/'+loginUser.userLogin+'/main.html' }}" title="返回博客首页">欢迎，<span
+					th:text="${loginUser.userName}"></span>博客</a> <a href="#"
+					id="skin" style="cursor: pointer" th:remove="${session.userSession.id == userModel.id ? 'none' : 'all' }">装扮</a> <a id="logout"
+					onclick="doExit()" style="cursor: pointer;">|| 退出</a>
+			</div>
+			<div class="contenttop">
+				<div class="logo f_l">
+					<span><a href="" th:text="${userModel.userName}">夏の花世界</a></span>
+					<p
+						th:utext="${userModel.userSignature}==''?'暂无个性签名':${userModel.userSignature}"></p>
+				</div>
+				<div class="blank"></div>
+				<nav>
+					<div class="navigation">
+						<ul class="menu">
+							<li><a th:href="@{${'/user/'+userModel.userLogin+'/main.html'}}"  class="bj">首页</a></li>
+							<li><a th:href="@{${'/user/att/'+userModel.userLogin+'/focus.html'}}" >关注人</a></li>
+							<li><a th:href="@{${'/user/atc/'+userModel.userLogin+'/article.html'}}" >文章</a></li>
+							<li><a th:href="@{${'/user/pic/'+userModel.userLogin+'/listpic.html'}}">相册</a></li>
+							<li><a th:href="@{${'/user/lea/'+userModel.userLogin+'/leave.html'}}">留言板</a></li>
+						</ul>
+					</div>
+				</nav>
+				<div class="search f_r">
+					<form action="/e/search/index.php" method="post" name="searchform"
+						id="searchform">
+						<input name="keyboard" id="keyboard" class="input_text"
+							value="请输入关键字" style="color: rgb(153, 153, 153);"
+							onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}"
+							onblur="if(value==''){this.style.color='#999';value='请输入关键字'}"
+							type="text"> <input name="show" value="title"
+							type="hidden"> <input name="tempid" value="1"
+							type="hidden"> <input name="tbname" value="news"
+							type="hidden"> <input name="Submit" class="input_submit"
+							value="搜  索" type="submit">
+					</form>
+				</div>
+			</div>
+		</header>
+		<div class="jzend"></div>
+		<div class="container">
+			<form action="" method="post">
+				<div class="bloglist f_l">
+					<div class="about_box">
+						<h2 class="nh1 info">
+							<span><a th:href="@{/user/edit.html}" th:remove="${userModel.id == session.userSession.id ? 'none' : 'all'}">编辑</a></span><b>基本资料</b>
+						</h2>
+						<table class="dtab">
+							<tr>
+								<td class="lst f_r" style="text-align: right;">博客名：</td>
+								<td class="info_about" th:utext="${userModel.userName}"></td>
+
+							</tr>
+							<tr>
+								<td class="lst f_r" style="text-align: right;">性别：</td>
+								<td class="info_about"
+									th:text="${userModel.userGender==1?'男':'女'}">女</td>
+
+							</tr>
+							<tr>
+								<td class="lst f_r" style="text-align: right;">年龄：</td>
+								<td class="info_about"
+									th:text="${userModel.userAge}==''?'暂无':${userModel.userAge}">暂无</td>
+
+							</tr>
+							<tr>
+								<td class="lst f_r" style="text-align: right;">生日：</td>
+								<td class="info_about"
+									th:text="${#dates.format(userModel.userBirthday,'yyyy-MM-dd')}==null?'-':${#dates.format(userModel.userBirthday,'yyyy-MM-dd')}">暂无</td>
+
+							</tr>
+							<tr>
+								<td class="lst f_r" style="text-align: right;">现居地：</td>
+								<td class="info_about"
+									th:text="${userModel.userAddress}==''?'暂无':${userModel.userAddress}"></td>
+
+							</tr>
+							<tr>
+								<td class="lst f_r" style="text-align: right;">签名：</td>
+								<td class="info_about"><p
+										th:utext="${userModel.userSignature}==''?'暂无':${userModel.userSignature}"></p></td>
+
+							</tr>
+						</table>
+						<h2 class="nh1 info">
+							<b>联系方式</b>
+						</h2>
+						<table class="dtab">
+							<tr>
+								<td class="lst f_r" style="text-align: right;">手机：</td>
+								<td class="info_about"
+									th:text="${userModel.userTelphone}==0?'暂无':${userModel.userTelphone}">123</td>
+
+							</tr>
+							<tr>
+								<td class="lst f_r" style="text-align: right;">邮箱：</td>
+								<td class="info_about"
+									th:text="${userModel.userEmail}==''?'暂无':${userModel.userEmail}">11@qq.com</td>
+
+							</tr>
+
+						</table>
+
+						<h2 class="nh1 info">
+							<b>个人简介</b>
+						</h2>
+						<ul class="about_content">
+							</br>
+							<p th:utext="${userModel.userIntro}"></p>
+						</ul>
+
+					</div>
+				</div>
+				<div class="r_box f_r">
+					<div class="user">
+						<h3 class="tit">关于我</h3>
+						<div class="ms-avatar">
+							<div id="promptC"></div>
+							<input type="hidden" id="hpic" name="pic" value="${blog.portrait}" /> 
+							<a th:if="${userModel.userPhotoimg ne ''}">
+								<img id="imgShow" th:src="@{${userModel.userPhotoimg}}" />
+								</a>
+							 <a th:if="${userModel.userPhotoimg eq ''}">
+							 	<img id="imgShow" th:src="@{/statics/images/head.png}" /> 
+							 	</a> 
+							 	
+							 	<strong th:text="${userModel.userName}">水墨话</strong>
+							<ul class="ms-personal">
+								<li>性 别：<span
+									th:text="${userModel.userGender==1?'男':'女'}"></span></li>
+								<li>爱 好：<span
+									th:text="${userModel.userLoves}==''?'-':${userModel.userLoves}"></span></li>
+								<li>现居地：<span
+									th:text="${userModel.userAddress}==''?'-':${userModel.userAddress}"></span></li>
+								<li>最后登录时间：<span
+									th:text="${#dates.format(userModel.userLogintime,'yyyy-MM-dd')}"></span></li>
+							</ul>
+						</div>
+					</div>
+					<!--tit01 end-->
+					<div class="ph">
+						<h3 class="tit">相关推荐</h3>
+						<ul class="rank recommend" >
+							
+						</ul>
+					</div>
+				</div>
+			</form>
+			<!-- container代码 结束 -->
+		</div>
+
+		<div class="blank"></div>
+		<!-- container代码 结束 -->
+	</div>
+
+	<input type="hidden" id="path" name="path"
+		th:value="${#httpServletRequest.getContextPath()}" />
+	<input type="hidden" id="user" th:value="${userModel.userLogin}">
+	<script type="text/javascript"
+		th:src="@{/statics/js/jquery-1.11.0.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/statics/js/artDialog/artDialog.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/statics/js/artDialog/plugins/iframeTools.js}"></script>
+	<script type="text/javascript" th:src="@{/statics/js/message.js}"></script>
+	<script type="text/javascript" th:src="@{/statics/js/setskin.js}"></script>
+	<script type="text/javascript" th:src="@{/statics/js/recommendarticle.js}"></script>
+</body>
+</html>

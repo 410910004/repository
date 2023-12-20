@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>HzBlogs 登录页面</title>
+    <link rel="icon" th:href="@{/statics/images/img/favicon.ico}" type="image/x-icon"/>
+
+
+    <link rel="stylesheet" th:href="@{/statics/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/statics/css/mui.css} ">
+    <link rel="stylesheet" th:href="@{/statics/css/login.css}">
+    <style>
+
+
+        .bottomLine {
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            padding-top: 8px;
+            /*padding-bottom:10px;*/
+        }
+
+        .bot {
+            color: #7b6f5b;
+        }
+    </style>
+</head>
+<body>
+<div class="am-g content">
+    <div class="main">
+        <div class="lg_logo"></div>
+        <div class="synopsis">
+            <p class="zh">我们每天度过的称之为日常的生活，其实是一个个奇迹的连续也说不定。</p>
+            <p class="jp">日々私たちが过ごしている日常というのは、実は奇迹の连続なのかもしれん。</p>
+            <p class="zh">曾经有过悲伤和痛苦的日子，然后今后，也许仍然还会有那样的日子。尽管如此，我不会忘记，宝贵的每一天。</p>
+            <p class="jp">悲しい日も辛い日もあった、そして、これからも、そんな日はやってくるかもしれない。それでも、忘れられない、宝物の日々。</p>　
+            <p class="zh">但愿能再度，回首相凝望。惟愿如轻风，伴君永长久。</p>
+            <p class="jp">せめて一度くらい、振り向いてほしかった。せめて风のように、ただ傍にいたかった。</p>
+        </div>
+        <div class="loginDiv">
+            <div id="loginimg" style="padding: 25px"></div>
+            <form id="userForm" onsubmit="return false">
+                <div class="am-u-sm-12">
+                    <h4 align="center" style="font-size:18px; color: white; letter-spacing: 3px;">欢迎登录</h4>
+                    <h5 class="text-center success" id="success" th:text="${error}"></h5>
+                    <span class="left1"></span> <input id="userLogin" name="userLogin"
+                                                       th:value="${userLogin}" placeholder="邮箱/手机号/用户名" type="text"
+                                                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" maxlength="32"
+                                                       autofocus="autofocus">
+                    <span class="left2"></span> <input id="userPassword"
+                                                       name="userPassword" placeholder="请输入密码" type="password"
+                                                       maxlength="32">
+                </div>
+                <div class="am-u-sm-12" style="margin-top: 5px;"></div>
+                <div class="am-u-sm-12" style="margin-top: 15px;">
+                    <input name="valid" id="valid" type="text" class=""
+                           style="border:1px solid rgba(0, 0, 0, .2);width: 45%; display: inline; margin: 0 8% 0 0; text-align: center; padding: 0;"
+                           placeholder="验证码" size="4" maxlength="4"> <img src="" id="yanzhen"
+                                                                          align="absmiddle"
+                                                                          style="border: 1px solid rgba(0, 0, 0, .2);  cursor: pointer;"
+                                                                          th:title="看不清，换一种！"/>
+                </div>
+                <div class="am-u-sm-12" style="margin-top: 10px;">
+                    <input class="checkbox" type="checkbox" name="autologin" id="auto">
+                    <label for="auto"></label>
+                    <span id="autologin" class="check">&nbsp;自动登录</span>
+                </div>
+                <div class="am-u-sm-12" style="margin-top: 15px;">
+                    <button id="btnlogin" type="submit" class="am-btn ">Sign In</button>
+                </div>
+            </form>
+
+            <div class="am-u-sm-12" style="margin-top: 40px; background: rgba(0,0,0,0.2)">
+                <p style="margin: 0; padding: 14px 0;">
+                    <b style="font-size: 12px;color:white;cursor: pointer;">忘记密码?</b><a th:href="@{/user/register.html}" style="color: white; font-size: 14px;font-weight: 700;letter-spacing:3px;">注册</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<input type="hidden" id="path" name="path" th:value="${#httpServletRequest.getContextPath()}"/>
+<script type="text/javascript"
+        th:src="@{/statics/js/jquery-1.11.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/statics/js/login.js}"></script>
+<script type="text/javascript" th:src="@{/statics/js/device.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    $(document).ready(function () {
+        var path = $("#path").val();
+        var isMobile = device.mobile();
+        if (isMobile) {    /*手机端*/
+            window.location.href = path + '/mobile.html';
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>文章详细页</title>
+    <link rel="icon" th:href="@{/statics/images/img/favicon.ico}" type="image/x-icon"/>
+    <link th:href="@{/statics/css/backToTop.css}" rel="stylesheet">
+    <link th:href="@{/statics/css/iconfont.css}" rel="stylesheet">
+    <link th:href="@{/statics/css/base.css}" rel="stylesheet">
+    <link th:href="@{/statics/css/book.css}" rel="stylesheet">
+    <link th:href="@{/statics/css/main.css}" rel="stylesheet">
+    <link th:href="@{/statics/css/follower.css}" rel="stylesheet">
+    <link th:href="@{/statics/css/index.css}" rel="stylesheet">
+    <link th:href="@{'/statics/css/'+${userModel.userTheme}}" rel="stylesheet">
+    <!-- 弹窗样式 -->
+    <link rel="stylesheet" th:href="@{/statics/js/artDialog/skins/opera.css}" type="text/css"/>
+    <style>
+        .reply1 {
+            padding-left: 60px;
+            padding-top: 10px;
+        }
+
+        .autor {
+            margin: 0px
+        }
+
+        textarea {
+            margin-top: 20px;
+            width: 98.5%;
+            resize: vertical;
+            outline: none;
+        }
+
+        .icon {
+            width: 3em;
+            height: 3em;
+            vertical-align: -0.25em;
+            fill: currentColor;
+            overflow: hidden;
+        }
+
+        .reply1 {
+            padding-left: 30px;
+        }
+
+        .autor {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .addR {
+            padding-top: 5px;
+        }
+
+        #rMessage {
+            padding: 11px;
+        }
+
+        video {
+            outline: none;
+        }
+    </style>
+
+</head>
+<body>
+<div id="wrapper">
+    <header>
+        <div class="headtop"></div>
+        <div class="logtop">
+            <a th:href="@{${'/user/'+loginUser.userLogin+'/main.html' }}" title="返回博客首页">欢迎，<span
+                    th:text="${loginUser.userName}"></span>博客</a> <a href="#"
+                                                                     id="skin" style="cursor: pointer"
+                                                                     th:remove="${session.userSession.id == userModel.id ? 'none' : 'all' }">装扮</a>
+            <a id="logout"
+               onclick="doExit()" style="cursor: pointer;">|| 退出</a>
+        </div>
+        <div class="contenttop">
+            <div class="logo f_l">
+                <span><a href="" th:text="${userModel.userName}">夏の花世界</a></span>
+                <p th:utext="${userModel.userSignature}==''?'暂无个性签名':${userModel.userSignature}"></p>
+            </div>
+
+            <div class="blank"></div>
+            <nav>
+                <div class="navigation">
+                    <ul class="menu">
+                        <li><a th:href="@{${'/user/'+userModel.userLogin+'/main.html'}}">首页</a></li>
+                        <li><a th:href="@{${'/user/att/'+userModel.userLogin+'/focus.html'}}">关注人</a></li>
+                        <li><a th:href="@{${'/user/atc/'+userModel.userLogin+'/article.html'}}" class="bj">文章</a></li>
+                        <li><a th:href="@{${'/user/pic/'+userModel.userLogin+'/listpic.html'}}">相册</a></li>
+                        <li><a th:href="@{${'/user/lea/'+userModel.userLogin+'/leave.html'}}">留言板</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="search f_r">
+                <form action="/e/search/index.php" method="post" name="searchform"
+                      id="searchform">
+                    <input name="keyboard" id="keyboard" class="input_text"
+                           value="请输入关键字" style="color: rgb(153, 153, 153);"
+                           onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}"
+                           onblur="if(value==''){this.style.color='#999';value='请输入关键字'}"
+                           type="text"> <input name="show" value="title"
+                                               type="hidden"> <input name="tempid" value="1"
+                                                                     type="hidden"> <input name="tbname" value="news"
+                                                                                           type="hidden"> <input
+                        name="Submit" class="input_submit"
+                        value="搜索" type="submit">
+                </form>
+            </div>
+        </div>
+    </header>
+    <p id="message" class="messagessm" align="center"></p>
+    <div class="container">
+        <div class="con_content">
+            <div class="about_box" th:object="${articleModel}">
+                <input type="hidden" id="aid" th:value="*{articleId}"/>
+                <h2 class="nh1">
+						<span>您现在的位置是：<a th:href="@{${'/user/'+userModel.userLogin+'/main.html'}}">网站首页</a>>><a
+                                href="#">信息浏览</a></span><b>正文</b>
+                </h2>
+                <div class="f_box">
+                    <p class="a_title" th:text="*{articleTitle}">北影节上亮点不断 “北京城事”映照时代变迁</p>
+                    <p class="p_title"></p>
+
+
+                    <p class="box_p">
+                        <span th:text="发布时间：+${#dates.format(articleModel.articleCreatedate,'yyyy-MM-dd HH:mm:dd')}">2017-07-07 15:12:42</span>
+                        <span th:text="作者：+*{articleAuthor}">作者：唐孝文</span>
+                        <a th:href="@{${'/user/'+userModel.userLogin}+'/main.html'}" target="_black"
+                           th:text="来源：+*{getUserModel().userName}">来源：稽查支队</a>
+                        <span th:text="访问量：+*{hiCount}"></span>
+                    </p>
+                    <!-- 可用于内容模板 -->
+                </div>
+                <ul class="about_content" th:utext="*{articleContent}">
+                </ul>
+
+                <div class="nextinfos">
+
+                    相关推荐：<p th:each="list : ${recomment}">
+                    <a href="javascript:;" class="getabout" th:text="${list.articleTitle}"
+                       th:attr="aid=${list.articleId},luid=${list.userModel.userLogin}"></a>
+                </p>
+
+                </div>
+                <!-- 可用于内容模板 -->
+
+                <!-- container代码 结束 -->
+                <!--插入评论区 -start-->
+
+                <div class="gbko">
+
+                    <div class="leavelist">
+                        <div style="padding: 61.8px 50px 10px 0px;">
+                            <h2 class="nh1" style="padding-bottom: 15px;">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-pinglunqu"></use>
+                                </svg>
+                                评论
+                            </h2>
+                            <div class="gbook">
+                                <div class="leave">
+                                    <div style="padding:10px 20px;margin: 40px 0px;">
+                                        <textarea id="rMessage" style="color:#999;padding: 11px;" maxlength="500">随便说两句……</textarea>
+                                        <input class="input_submit commentbtn" type="submit" value="评论"
+                                               style="float:right"/>
+
+                                    </div>
+                                </div>
+                                <!-- 评论的数据-start -->
+
+                                <!-- 评论的数据-end -->
+                                <!-- 分页页码 -start-->
+
+                                <!-- 分页页码 -end-->
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="pagelist"
+                         style="text-align: center; color: #666; width: 100%; clear: both; margin: 10px 0; display: block; padding: 24px 0px 0px 0px;">
+                        <div layout:fragment="page">
+                            <div class="tcdPageCode"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--插入评论区 -end-->
+            </div>
+            <div class="blank"></div>
+
+        </div>
+        <!-- container代码 结束 -->
+
+        <footer>
+            <div class="footer">
+                <div class="f_l">
+                    <p>
+                        All Rights Reserved 版权所有：<a href="">Pandora工作室</a> 备案号：闽ICP备1234567890号
+                    </p>
+                </div>
+                <div class="f_r textr">
+                    <p>Design by DanceSmile</p>
+                </div>
+            </div>
+        </footer>
+        <button class="back_to_top" style="display: none;"><span class="icon iconfont icon-fanhuidingbu"></span>
+        </button>
+    </div>
+    <input type="hidden" id="path" name="path" th:value="${#httpServletRequest.getContextPath()}"/>
+    <input type="hidden" id="page" name="path" value="1"/>
+    <script type="text/javascript" th:src="@{/statics/js/jquery-1.11.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/artDialog/artDialog.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/artDialog/plugins/iframeTools.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/message.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/setskin.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/about.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/iconfont.js}"></script>
+    <script tyep="text/javascript" th:src="@{/statics/js/backToTop.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/jquery.page.js}"></script>
+    <script type="text/javascript">
+        /*访问文章事件- start*/
+        $(document).on("click", ".getabout", function () {
+            var aid = $(this).attr("aid");
+            var user1 = $(this).attr("luid")
+            $.post(path + "/user/atc/" + user1 + "/get/" + aid, function (data) {
+                if (data.error == 0) {
+                    window.open(path + "/user/atc/" + user1 + "/about/" + aid);
+                } else {
+                    alert(data.message);
+                }
+            });
+        });
+        /*访问文章事件- end*/
+    </script>
+</body>
+</html>

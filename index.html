@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>QQ空间首页</title>
+<link rel="icon"  th:href="@{/statics/images/img/favicon.ico}" type="image/x-icon" />
+<link th:href="@{/statics/css/backToTop.css}" rel="stylesheet">
+<link th:href="@{/statics/css/iconfont.css}" rel="stylesheet">
+<link th:href="@{/statics/css/base.css}" rel="stylesheet">
+<link th:href="@{/statics/css/index.css}" rel="stylesheet">
+<link th:href="@{/statics/css/clockstyle.css}" rel="stylesheet">
+<!-- 皮肤主题样式 -->
+<link th:href="@{'/statics/css/'+${userModel.userTheme}}" rel="stylesheet">
+<!-- 弹窗样式 -->
+<link rel="stylesheet" th:href="@{/statics/js/artDialog/skins/opera.css}" type="text/css" />
+	<style>
+		*{
+			box-sizing: border-box!important;
+		}
+	</style>
+</head>
+
+<body>
+	
+	<div id="wrapper">
+		<header>
+			<div class="headtop"></div>
+			<div class="logtop">
+				<a th:href="@{${'/user/'+loginUser.userLogin+'/main.html' }}" title="返回博客首页">欢迎，<span
+					th:text="${loginUser.userName}"></span>博客</a> <a href="#"
+					id="skin" style="cursor: pointer" th:remove="${session.userSession.id == userModel.id ? 'none' : 'all' }">装扮</a> <a id="logout"
+					onclick="doExit()" style="cursor: pointer;">|| 退出</a>
+			</div>
+
+			<div class="contenttop">
+				<div class="logo f_l">
+					<span ><a  href th:text="${userModel.userName}">夏の花世界</a></span>
+					<p th:utext="${userModel.userSignature}==''?'暂无个性签名':${userModel.userSignature}"></p>
+				</div>
+				<div class="blank"></div>
+				<nav>
+					<div class="navigation">
+						<ul class="menu">
+							<li><a th:href="@{${'/user/'+userModel.userLogin+'/main.html'}}"  class="bj">首页</a></li>
+							<li><a th:href="@{${'/user/att/'+userModel.userLogin+'/focus.html'}}">关注人</a></li>
+							<li><a th:href="@{${'/user/atc/'+userModel.userLogin+'/article.html'}}">文章</a></li>
+							<li><a th:href="@{${'/user/pic/'+userModel.userLogin+'/listpic.html'}}">相册</a></li>
+							<li><a th:href="@{${'/user/lea/'+userModel.userLogin+'/leave.html'}}">留言板</a></li>
+						</ul>
+					</div>
+				</nav>
+
+				<div class="search f_r">
+					<form action="/user/search" method="post" name="searchform"
+						id="searchform">
+						<input name="keyboard" id="keyboard" class="input_text"
+							value="请输入关键字" style="color: rgb(153, 153, 153);"
+							onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}"
+							onblur="if(value==''){this.style.color='#999';value='请输入关键字'}"
+							type="text"> <input name="show" value="title"
+							type="hidden"> <input name="tempid" value="1"
+							type="hidden"> <input name="tbname" value="news"
+							type="hidden"> <input name="Submit" class="input_submit"
+							value="搜索" type="submit">
+					</form>
+				</div>
+			</div>
+		</header>
+		<p id="message"  class="messagessm" align="center" ></p>
+		<div class="jztop"></div>
+		<div class="container">
+			<div class="bloglist f_l">
+				<div class="blogs message" style="height: 20px;text-align: center;font-size: 13px;font-weight:500; line-height: 20px;display: none;">没有更多内容了</div>
+			</div>
+
+			<div class="r_box f_r">
+				
+				<div class="user">
+					<h3 class="tit">关于我</h3>
+					<div class="ms-avatar" >
+						<a th:href="@{${'/user/'+userModel.userLogin}+'/userInfo.html'}" th:if="${userModel.userPhotoimg ne ''}">
+							<img th:src="@{${userModel.userPhotoimg} }">
+						</a>
+							<a th:href="@{${'/user/'+userModel.userLogin}+'/userInfo.html'}" th:if="${userModel.userPhotoimg eq ''}">
+								<img th:src="@{/statics/images/head.png}"></a>
+							<a th:href="@{${'/user/'+userModel.userLogin}+'/userInfo.html'}" ><strong th:text="${userModel.userName}">水墨话</strong></a>
+							<button type="button" th:class="' gzccc btnwgz fol'+${userModel.id}"  th:if="${exflag == false} " th:attr="uid=${userModel.id}" th:remove="${session.userSession.id != userModel.id ? 'none' : 'all' }"><span class="icon iconfont icon-iconfonttaguanzhuwo s1"></span><span class="s2"> 关注ta</span></button>
+							<button  th:class="'  gzccc btnygz  fol'+${userModel.id}" type="button" th:attr="uid=${userModel.id}" th:if="${exflag != false} "  th:remove="${session.userSession.id != userModel.id ? 'none' : 'all' }"><span class="icon iconfont icon-woguanzhuta s1"></span><span class="s2">   已关注</span></button>
+							
+						<ul class="ms-personal">
+							<li>性 别：<span th:text="${userModel.userGender==1?'男':'女'}"></span></li>
+							<li>爱 好：<span th:text="${userModel.userLoves}==''?'-':${userModel.userLoves}"></span></li>
+							<li>现居地：<span th:text="${userModel.userAddress}==''?'-':${userModel.userAddress}"></span></li>
+							<li>最后登录时间：<span th:text="${#dates.format(userModel.userLogintime,'yyyy-MM-dd')}"></span></li>
+						</ul>
+					</div>
+				</div>
+				<div class="ph" style=" margin-bottom: 20px;border-radius: 0  0 15px 15px;">
+					<h3 class="tit">天气</h3>
+					<div style="text-align: center;">
+						 <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=55" style=" background-color: white;border-radius: 0  0 15px 15px;text" height="294" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" ></iframe>
+						</div>
+				</div>
+
+				<div class="ph">
+					<h3 class="tit">相关推荐</h3>
+					<ul class="rank recommend"   >
+						
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<button class="back_to_top" style="display: none;"><span class="icon iconfont icon-fanhuidingbu"></span></button>
+	<input type="hidden" id="path"  th:value="${#httpServletRequest.getContextPath()}" />
+	<input type="hidden" id="user" th:value="${userModel.userLogin}" />
+	<input type="hidden" id="sid"  th:value="${session.userSession.id}" />
+	<input type="hidden" id="uid"  th:value="${userModel.id}" />
+	<script type="text/javascript" th:src="@{/statics/js/jquery-1.11.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{/statics/js/artDialog/artDialog.js}"></script>
+	<script type="text/javascript" th:src="@{/statics/js/artDialog/plugins/iframeTools.js}"></script>
+	<script type="text/javascript" th:src="@{/statics/js/message.js}"></script>
+	<script type="text/javascript" th:src="@{/statics/js/setskin.js}"></script>
+	<script tyep="text/javascript" th:src="@{/statics/js/index.js}"></script>
+	<script tyep="text/javascript" th:src="@{/statics/js/scroll.monitor.js}"></script>
+	<script tyep="text/javascript" th:src="@{/statics/js/backToTop.js}"></script>
+	<script tyep="text/javascript" th:src="@{/statics/js/recommendarticle.js}"></script>
+	<script src="//unpkg.com/layui@2.6.8/dist/layui.js">
+
+</body>
+</html>

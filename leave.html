@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>个人博客模板古典系列之——江南墨卷</title>
+<link rel="icon"  th:href="@{/statics/images/img/favicon.ico}" type="image/x-icon" />
+<link th:href="@{/statics/css/backToTop.css}" rel="stylesheet">
+<link th:href="@{/statics/css/iconfont.css}" rel="stylesheet">
+<link th:href="@{/statics/css/follower.css}" rel="stylesheet">
+<link  th:href="@{/statics/css/base.css}" rel="stylesheet">
+<link  th:href="@{/statics/css/book.css}" rel="stylesheet">
+<link  th:href="@{/statics/css/index.css}" rel="stylesheet">
+<!-- 皮肤主题样式 -->
+<link th:href="@{'/statics/css/'+${userModel.userTheme}}" rel="stylesheet">
+<!-- 弹窗样式 -->
+<link rel="stylesheet" th:href="@{/statics/js/artDialog/skins/opera.css}" type="text/css" />
+
+<style>
+.reply1 {
+	padding-left: 30px;
+}
+
+.autor {
+	padding: 5px;
+	cursor: pointer;
+}
+
+.addR {
+	padding-top: 5px;
+}
+
+#rMessage {
+	padding: 11px;
+}
+textarea {
+	width: 97%;
+	resize: vertical;
+	outline: none;
+}
+</style>
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<div class="headtop"></div>
+			<div class="logtop">
+				<a th:href="@{${'/user/'+loginUser.userLogin+'/main.html' }}" title="返回博客首页">欢迎，<span
+					th:text="${loginUser.userName}"></span>博客</a> <a href="#"
+					id="skin" style="cursor: pointer" th:remove="${session.userSession.id == userModel.id ? 'none' : 'all' }">装扮</a> <a id="logout"
+					onclick="doExit()" style="cursor: pointer;">|| 退出</a>
+			</div>
+			<div class="contenttop">
+				<div class="logo f_l">
+					<span><a href=""  th:text="${userModel.userName}">夏の花世界</a></span>
+					<p th:utext="${userModel.userSignature}==''?'暂无个性签名':${userModel.userSignature}"></p>
+				</div>
+				<div class="blank"></div>
+				<nav>
+					<div class="navigation">
+						<ul class="menu">
+							<li><a th:href="@{${'/user/'+userModel.userLogin+'/main.html'}}"  >首页</a></li>
+							<li><a th:href="@{${'/user/att/'+userModel.userLogin+'/focus.html'}}">关注人</a></li>
+							<li><a th:href="@{${'/user/atc/'+userModel.userLogin+'/article.html'}}">文章</a></li>
+							<li><a th:href="@{${'/user/pic/'+userModel.userLogin+'/listpic.html'}}">相册</a></li>
+							<li><a th:href="@{${'/user/lea/'+userModel.userLogin+'/leave.html'}}" class="bj">留言板</a></li>
+						</ul>
+					</div>
+				</nav>
+
+				<div class="search f_r">
+					<form action="/e/search/index.php" method="post" name="searchform"
+						id="searchform">
+						<input name="keyboard" id="keyboard" class="input_text"
+							value="请输入关键字" style="color: rgb(153, 153, 153);"
+							onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}"
+							onblur="if(value==''){this.style.color='#999';value='请输入关键字'}"
+							type="text"> <input name="show" value="title"
+							type="hidden"> <input name="tempid" value="1"
+							type="hidden"> <input name="tbname" value="news"
+							type="hidden"> <input name="Submit" class="input_submit"
+							value="搜索" type="submit">
+					</form>
+				</div>
+			</div>
+		</header>
+		<p id="message"  class="messagessm" align="center" ></p>
+		<div class="jztop"></div>
+		<article>
+			<div id="container">
+				<h2 class="ctitle">
+					<b th:attr="class= ${userModel.id != session.userSession.id ? '' : 'sendword'}" style="cursor: pointer;">留言板</b> <span class="word" th:text="${userModel.userSendWord}"> </span>
+				</h2>
+				<div class="gbook">
+					<div class="gbko">
+						<!--插入留言版-->
+						<div class="leavelist">
+							<div class="leave">
+								<div style="padding: 50px 20px">
+										<textarea id="rMessage" style="color: #999; padding: 11px; " maxlength="500">随便说两句……</textarea>
+										<input id="messagebtn" class="input_submit messagebtn" type="button" value="留言"
+											style="float: right" />
+									
+								</div>
+							</div>
+							<div th:attr="id=me+${messageModel.meId}" class="related"  th:each=" messageModel : ${page.list}">
+								<div class="leave">
+									<div class="hyxx">
+										<div class="portrait1">
+											<a href="javascript:;" class="getUserMain" th:attr="luid=${messageModel.userModel.userLogin}" ><img th:src="@{${messageModel.userModel.userPhotoimg == '' ? '/statics/images/head.png' : messageModel.userModel.userPhotoimg}}" /></a>
+										</div>
+										<div class="info">
+											<div class="f_nick" ><a href="javascript:;"  class="getUserMain" th:attr="luid=${messageModel.userModel.userLogin}" th:text="${messageModel.meLeaveName}"></a></div>
+											<div class="f_data" th:text="[+${#dates.format(messageModel.meDate,'yyyy-MM-dd HH:mm')}+]"></div>
+										</div>
+									</div>
+									<div class="reply" style="padding: 10px 20px;">
+										<h3 th:utext="${messageModel.meContent}"></h3>
+										<p class="autor f_r">
+											<span class="sc f_r delmessage"  th:attr="mid=${messageModel.meId}" th:remove="${userModel.id == session.userSession.id ? 'none' : 'all'}">删除该留言</span> <span class="hf f_r ">回复</span>
+										</p>
+										<div class="addR">
+											
+												<textarea id="rMessage"  th:attr="uid=${messageModel.userModel.id},mid=${messageModel.meId}" maxlength="300">请输入回复</textarea>
+												<input id="answeringbtn" class="input_submit answeringbtn" type="button" value="提交"
+													style="float: right" />
+										
+										</div>
+									</div>
+								</div>
+								
+								<div class="reply1" th:attr="id=an+${answeringModel.anId}" th:each="answeringModel : ${messageModel.answeringModels}">
+									<div class="f_nick">
+										 <span th:text="${answeringModel.anLeaveName}"></span> 
+										<b>回复</b>
+										 <span th:text="${answeringModel.anUserName}"></span> 
+										 <span th:text="[+${#dates.format(answeringModel.anDate,'yyyy-MM-dd HH:mm')}+]"></span>
+									</div>
+									<div class="reply" style="padding: 7px 20px 0 20px">
+										<h3 th:utext="${answeringModel.anContent}"></h3>
+										<p class="autor f_r">
+											<span class="sc f_r delanswering" th:attr="anid=${answeringModel.anId}" th:remove="${userModel.id == session.userSession.id ? 'none' : 'all'}">删除该回复</span> <span class="hf f_r">回复</span>
+										</p>
+										<div class="addR">
+											<form action="">
+												<textarea id="rMessage"  th:attr="uid=${answeringModel.anLeaveid},mid=${answeringModel.anMessageid}" maxlength="300">请输入回复</textarea>
+												<input class="input_submit answeringbtn" type="button" value="提交"
+													style="float: right" />
+											</form>
+										</div>
+									</div>
+								</div>
+										
+							</div>
+										
+						</div>
+						<div class="pagelist" align="center" style="margin-top: 30px;">
+								<div layout:fragment="page" >
+        								<div class="tcdPageCode"></div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<div class="jztop"></div>
+
+	</div>
+
+<button class="back_to_top" style="display: none;"><span class="icon iconfont icon-fanhuidingbu"></span></button>
+<input type="hidden" id="path" name="path" th:value="${#httpServletRequest.getContextPath()}" />
+<input type="hidden" id="user" th:value="${userModel.userLogin}">
+<script type="text/javascript" th:src="@{/statics/js/jquery-1.11.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/statics/js/artDialog/artDialog.js}"></script>
+<script type="text/javascript" th:src="@{/statics/js/artDialog/plugins/iframeTools.js}"></script>
+<script type="text/javascript" th:src="@{/statics/js/message.js}"></script>
+<script type="text/javascript" th:src="@{/statics/js/setskin.js}"></script>
+<script th:src="@{/statics/js/scrollReveal.js}"></script>
+<script type="text/javascript" th:src="@{/statics/js/leave.js}"></script>
+<script type="text/javascript" th:src="@{/statics/js/jquery.page.js}"></script>
+<script tyep="text/javascript" th:src="@{/statics/js/backToTop.js}"></script> 
+<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			//创建分页
+			 $(".tcdPageCode").createPage({
+			        pageCount:  [[${page.totalPageCount}]],
+			        current: [[${page.currentPageNo}]],
+			        backFn: function(p) {
+			            search(p);
+			        }
+			    });			 
+				//查询方法
+			    function search(p) {
+			        location=path+"/user/lea/leave.html?page="+p;
+
+			    }
+		});
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>HzBlogs 注册页面</title>
+    <link rel="icon" th:href="@{/statics/images/img/favicon.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/statics/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/statics/css/mui.css}">
+    <link rel="stylesheet" th:href="@{/statics/css/login.css}">
+    <style>
+        .bottomLine {
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            padding-top: 8px;
+        }
+        .zh{
+            font-size: 15px!important;
+        }
+        .jp{
+            font-size: 18px!important;
+        }
+        .synopsis{
+            top: 40% !important;
+            left: 15%!important;
+        }
+
+        .bot {
+            color: #7b6f5b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="am-g content">
+    <div class="main">
+            <div class="lg_logo"></div>
+        <div class="synopsis" >
+            <p class="zh">当你把快乐与别人分享时，你就拥有两份快乐</p>
+            <p class="jp">当你敞开心扉，把自己的珍贵东西拿出与别人分享时</p>
+            <p class="zh">你会明白：分享是美丽的</p>
+
+        </div>
+
+        <div class="loginDiv">
+            <div id="loginimg" style="padding: 25px"></div>
+
+            <div class="am-u-sm-12">
+                <h4 align="center" style="font-size:18px; color: white; letter-spacing: 3px;">欢迎注册</h4>
+                <h5 class=" success" id="success"></h5>
+                <span class="left1"></span> <input id="login" name="userLogin"
+                                                   placeholder="邮箱/手机号/用户名" type="text"
+                                                   onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" maxlength="32"
+                                                   autofocus="autofocus">
+                <span id="error_login" class=""></span> <span class="left2"></span>
+                <input id="userPwd" name="pwd" placeholder="请输入密码" type="password" min="" maxlength="24">
+            </div>
+            <div class="am-u-sm-12" style="margin-top: 5px;"></div>
+            <div class="am-u-sm-12" style="margin-top: 15px;">
+                <input name="valid" id="valid" type="text" class=""
+                       style="border:1px solid rgba(0, 0, 0, .2); width: 45%; display: inline; margin: 0 8% 0 0; text-align: center; padding: 0;"
+                       placeholder="验证码" size="4" maxlength="4"> <img src="" id="yanzhen"
+                                                                      align="absmiddle"
+                                                                      style="border: 1px solid rgba(0, 0, 0, .2);  cursor: pointer;"
+                                                                      th:title="看不清，换一种！"/>
+            </div>
+
+            <div class="am-u-sm-12" style="margin-top: 20px;">
+                <button id="savebtn" type="button" class="am-btnn am-btn ">Sign Up</button>
+            </div>
+
+            <div class="am-u-sm-12" style="margin-top: 40px; background: rgba(0,0,0,0.2)">
+                <p style="margin: 0; padding: 14px 0;">
+                    <b style="font-size: 12px;cursor: pointer;">忘记密码?</b><a th:href="@{/user/login.html}" style="color:white; font-size: 14px;font-weight: 700;letter-spacing:2px;">返回登录</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="path" name="path"
+       th:value="${#httpServletRequest.getContextPath()}"/>
+<script type="text/javascript"
+        th:src="@{/statics/js/jquery-1.11.0.min.js}"></script>
+<script type="text/javascript"
+        th:src="@{/statics/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/statics/js/register.js}" type="text/javascript"></script>
+
+</body>
+</html>
